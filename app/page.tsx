@@ -7,8 +7,8 @@ export default function Home() {
   return (
     <main className="bg-[#FFE000] font-nunito">
       {/* Hero */}
-      <section className="min-h-screen flex items-center px-6 md:px-16">
-        <div className="select-none">
+      <section className="min-h-screen flex items-center justify-center px-6 md:px-16">
+        <div className="select-none inline-block">
           <h1
             className="font-black leading-none tracking-tight uppercase text-black"
             style={{ fontSize: "clamp(64px, 16vw, 220px)" }}
@@ -22,7 +22,7 @@ export default function Home() {
             </sup>
           </h1>
           <p
-            className="font-semibold text-black mt-5 tracking-wide"
+            className="font-semibold text-black mt-2 tracking-wide"
             style={{ fontSize: "clamp(18px, 3vw, 40px)" }}
           >
             for information

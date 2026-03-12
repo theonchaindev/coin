@@ -46,7 +46,7 @@ export default function MemeGenerator() {
     ctx.fillText(displayMain, pad, startY);
 
     ctx.font = `600 ${subSize}px Nunito, Arial, sans-serif`;
-    ctx.fillText(`for ${displayFor}`, pad, startY + subSize * 1.8);
+    ctx.fillText(`for ${displayFor}`, pad, startY + subSize * 1.4);
 
     const link = document.createElement("a");
     link.download = "coin-meme.png";
@@ -73,7 +73,7 @@ export default function MemeGenerator() {
           {displayMain}
         </h2>
         <p
-          className="font-semibold text-black mt-2"
+          className="font-semibold text-black mt-1"
           style={{ fontSize: `${subFontSize}px` }}
         >
           for {displayFor}
