@@ -9,46 +9,44 @@ export default function MemeGenerator() {
   const displayMain = mainText.trim().toUpperCase() || "COIN";
   const displayFor = forText.trim() || "buying";
 
-  // Scale font size based on text length for preview
+  // Scale font size for preview (square container ~500px wide)
   const previewFontSize = Math.max(
     32,
-    Math.min(110, 460 / Math.max(displayMain.length, 2))
+    Math.min(120, 480 / Math.max(displayMain.length, 2))
   );
   const subFontSize = Math.max(14, previewFontSize * 0.3);
+  const padding = Math.round(previewFontSize * 0.4);
 
   const downloadMeme = async () => {
     const canvas = document.createElement("canvas");
-    const W = 1200;
-    const H = 630;
-    canvas.width = W;
-    canvas.height = H;
+    const S = 1080;
+    canvas.width = S;
+    canvas.height = S;
     const ctx = canvas.getContext("2d")!;
 
-    // Background
     ctx.fillStyle = "#FFE000";
-    ctx.fillRect(0, 0, W, H);
+    ctx.fillRect(0, 0, S, S);
 
     await document.fonts.ready;
 
-    // Main text
     const mainFontSize = Math.max(
-      72,
-      Math.min(200, 800 / Math.max(displayMain.length, 2))
+      80,
+      Math.min(220, 900 / Math.max(displayMain.length, 2))
     );
-    ctx.fillStyle = "#000000";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "alphabetic";
-    ctx.font = `900 ${mainFontSize}px Nunito, 'Arial Black', sans-serif`;
-    ctx.fillText(displayMain, W / 2, H / 2 + mainFontSize * 0.15);
+    const pad = Math.round(mainFontSize * 0.4);
+    const subSize = Math.round(mainFontSize * 0.3);
+    const blockHeight = mainFontSize + subSize * 1.8;
+    const startY = (S - blockHeight) / 2 + mainFontSize * 0.85;
 
-    // Subtext
-    const subSize = Math.round(mainFontSize * 0.32);
+    ctx.fillStyle = "#000000";
+    ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
+
+    ctx.font = `900 ${mainFontSize}px Nunito, 'Arial Black', sans-serif`;
+    ctx.fillText(displayMain, pad, startY);
+
     ctx.font = `600 ${subSize}px Nunito, Arial, sans-serif`;
-    ctx.fillText(
-      `for ${displayFor}`,
-      W / 2,
-      H / 2 + mainFontSize * 0.15 + subSize * 1.8
-    );
+    ctx.fillText(`for ${displayFor}`, pad, startY + subSize * 1.8);
 
     const link = document.createElement("a");
     link.download = "coin-meme.png";
@@ -58,19 +56,24 @@ export default function MemeGenerator() {
 
   return (
     <div className="flex flex-col items-center gap-8">
-      {/* Live Preview */}
+      {/* Live Preview — 1:1 */}
       <div
-        className="w-full bg-[#FFE000] flex flex-col items-center justify-center border-4 border-black"
-        style={{ maxWidth: "600px", aspectRatio: "1200/630" }}
+        className="w-full bg-[#FFE000] border-4 border-black flex flex-col justify-center"
+        style={{
+          maxWidth: "500px",
+          aspectRatio: "1 / 1",
+          paddingLeft: `${padding}px`,
+          paddingRight: `${padding}px`,
+        }}
       >
         <h2
-          className="font-black uppercase text-black leading-none text-center px-6"
+          className="font-black uppercase text-black leading-none"
           style={{ fontSize: `${previewFontSize}px` }}
         >
           {displayMain}
         </h2>
         <p
-          className="font-semibold text-black text-center mt-3"
+          className="font-semibold text-black mt-2"
           style={{ fontSize: `${subFontSize}px` }}
         >
           for {displayFor}
@@ -78,7 +81,7 @@ export default function MemeGenerator() {
       </div>
 
       {/* Controls */}
-      <div className="w-full flex flex-col gap-4" style={{ maxWidth: "600px" }}>
+      <div className="w-full flex flex-col gap-4" style={{ maxWidth: "500px" }}>
         <div>
           <label className="block font-black uppercase text-black text-xs tracking-widest mb-2">
             Main Text
